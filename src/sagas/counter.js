@@ -1,5 +1,5 @@
 import * as Types from '../actions/ActionTypes';
-import { put, takeEvery } from 'redux-saga/effects';
+import { put, takeEvery, all } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 
 const incrementSaga = function* (action) {
@@ -15,8 +15,13 @@ const decrementSaga = function* (action) {
 const watchCounterSaga = function* () {
     // takeEvery 是 concurrent, 在此的 yield 為無順序執行
     // takeEvery 會把 action 自動丟到後面的 generatir 裡面當 input
-    yield takeEvery(Types.INCREMENT_COUNT_ASYNC, incrementSaga);
-    yield takeEvery(Types.DECREMENT_COUNT_ASYNC, decrementSaga);
+    // 下面兩行可以寫到 yield all 裡面
+    // yield takeEvery(Types.INCREMENT_COUNT_ASYNC, incrementSaga);
+    // yield takeEvery(Types.DECREMENT_COUNT_ASYNC, decrementSaga);
+    yield all ([
+        takeEvery(Types.INCREMENT_COUNT_ASYNC, incrementSaga),
+        takeEvery(Types.DECREMENT_COUNT_ASYNC, decrementSaga),
+    ]);
 };
 
 export default watchCounterSaga;
