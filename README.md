@@ -1,2 +1,4 @@
+# Run Saga by example
 
-# Run Saga by example from scratch: `create-react-app`
+Run saga by examples from scratch based on official [create-react-app](https://github.com/facebookincubator/create-react-app).
+
