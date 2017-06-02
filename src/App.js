@@ -18,12 +18,12 @@ class App extends Component {
 
   handleIncrement({ asyn = false }) {
     const { increment, incrementAsync } = this.props;
-    asyn ? incrementAsync({ delay: 1 }) : increment();
+    asyn ? incrementAsync({ delay: 2000 }) : increment();
   }
 
   handleDecrement({ asyn = false }) {
     const { decrement, decrementAsync } = this.props;
-    asyn ? decrementAsync({ delay: 1 }) : decrement();
+    asyn ? decrementAsync({ delay: 2000 }) : decrement();
   }
 
   render() {
