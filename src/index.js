@@ -6,11 +6,18 @@ import './index.css';
 
 import { applyMiddleware, createStore, combineReducers, compose } from 'redux';
 import { Provider } from 'react-redux';
+
+// reducers;
 import countReducer from './reducers/count';
+import usersReducer from './reducers/users';
+
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas/rootSaga';
 
-const reducer = combineReducers({ count: countReducer });
+const reducer = combineReducers({
+    count: countReducer,
+    users: usersReducer,
+});
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
     reducer,

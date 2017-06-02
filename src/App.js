@@ -4,7 +4,7 @@ import './App.css';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import * as counterActions from './actions/counter.js';
+import * as actions from './actions';
 
 class App extends Component {
 
@@ -14,6 +14,7 @@ class App extends Component {
     incrementAsync: PropTypes.func.isRequired,
     decrement: PropTypes.func.isRequired,
     decrementAsync: PropTypes.func.isRequired,
+    getUsers: PropTypes.func.isRequired,
   };
 
   handleIncrement({ asyn = false }) {
@@ -26,8 +27,12 @@ class App extends Component {
     asyn ? decrementAsync({ delay: 2000 }) : decrement();
   }
 
+  handleFetchUsers() {
+    this.props.getUsers();
+  }
+
   render() {
-    const { count } = this.props;
+    const { count, users } = this.props;
     return (
       <div className="App">
         <div className="App-header">
@@ -44,6 +49,17 @@ class App extends Component {
             <button onClick={() => this.handleIncrement({ asyn: true })}>async +</button>
             <button onClick={() => this.handleDecrement({ asyn: true })}>async -</button>
           </div>
+          <div className="btn-group">
+            <button onClick={() => this.handleFetchUsers()}>fetch users</button>
+          </div>
+          <div className="display-panel">
+            {users.length ?
+              <ul className="user-list">
+                {users.map((user, index) =><li key={index}>{user}</li> )}
+              </ul>
+              : null
+            }
+          </div>
         </div>
       </div>
     );
@@ -52,11 +68,13 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   count: state.count,
+  users: state.users,
 });
 
 export default connect(mapStateToProps, {
-  increment: counterActions.increment,
-  incrementAsync: counterActions.incrementAsync,
-  decrement: counterActions.decrement,
-  decrementAsync: counterActions.decrementAsync,
+  increment: actions.counter.increment,
+  incrementAsync: actions.counter.incrementAsync,
+  decrement: actions.counter.decrement,
+  decrementAsync: actions.counter.decrementAsync,
+  getUsers: actions.users.getUsers,
 })(App);
