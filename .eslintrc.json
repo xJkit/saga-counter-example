@@ -1,0 +1,6 @@
+{
+  "parser": "babel-eslint",
+  "eslintConfig": {
+    "extends": "react-app"
+  }
+}
