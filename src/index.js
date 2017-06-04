@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import './index.css';
 
@@ -33,7 +34,9 @@ sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
     <Provider store={store}>
+      <MuiThemeProvider>
         <App />
+      </MuiThemeProvider>
     </Provider>
     , document.getElementById('root'));
 registerServiceWorker();

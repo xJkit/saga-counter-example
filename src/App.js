@@ -1,10 +1,32 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import './App.css';
 import PropTypes from 'prop-types';
+import './styles/App.css';
 
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import User from './User';
+
+// Material UI Components
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentRemove from 'material-ui/svg-icons/content/remove';
+import RaisedButton from 'material-ui/RaisedButton';
+import { green500, redA200 } from 'material-ui/styles/colors';
+
+const styles = {
+  counterStyle: {
+    add: {
+      backgroundColor: green500,
+    },
+    remove: {
+      backgroundColor: redA200,
+    },
+  },
+  asyncStyle: {
+    color: 'white',
+  },
+}
 
 class App extends Component {
 
@@ -37,26 +59,48 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Welcome to React + Material UI</h2>
         </div>
         <div className="App-intro">
           <div className="meter">{count}</div>
           <div className="btn-group">
-            <button onClick={() => this.handleIncrement({})}>+</button>
-            <button onClick={() => this.handleDecrement({})}>-</button>
+            <FloatingActionButton
+              onClick={() => this.handleIncrement({})}
+              backgroundColor={styles.counterStyle.add.backgroundColor}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+            <FloatingActionButton
+              onClick={() => this.handleDecrement({})}
+              backgroundColor={styles.counterStyle.remove.backgroundColor}
+            >
+              <ContentRemove />
+            </FloatingActionButton>
           </div>
           <div className="btn-group">
-            <button onClick={() => this.handleIncrement({ asyn: true })}>async +</button>
-            <button onClick={() => this.handleDecrement({ asyn: true })}>async -</button>
+            <FloatingActionButton
+              onClick={() => this.handleIncrement({ asyn: true })}
+              style={styles.asyncStyle.color}
+            >
+              async +
+            </FloatingActionButton>
+            <FloatingActionButton
+              onClick={() => this.handleDecrement({ asyn: true })}
+              style={styles.asyncStyle.color}
+            >
+              async -
+            </FloatingActionButton>
           </div>
           <div className="btn-group">
-            <button onClick={() => this.handleFetchUsers()}>fetch users</button>
+            <RaisedButton
+              onClick={() => this.handleFetchUsers()}
+              label="fetch users"
+              secondary
+            />
           </div>
           <div className="display-panel">
             {users.length ?
-              <ul className="user-list">
-                {users.map((user, index) =><li key={index}>{user}</li> )}
-              </ul>
+              users.map((user, index) => <User key={index} name={user} /> )
               : null
             }
           </div>

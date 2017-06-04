@@ -18,9 +18,11 @@
   font-size: large;
 }
 
-.App-intro .user-list {
-  list-style: none;
+.App-intro .display-panel {
+  margin: 0 auto;
+  width: 250px;
 }
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
