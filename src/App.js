@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './styles/App.css';
 
 import { connect } from 'react-redux';
-import * as actions from './actions';
+import * as actions from '@actions';
 import User from './User';
 
 // Material UI Components
@@ -29,24 +29,20 @@ const styles = {
 }
 
 class App extends Component {
-
   static propTypes = {
     count: PropTypes.number.isRequired,
-    increment: PropTypes.func.isRequired,
-    incrementAsync: PropTypes.func.isRequired,
-    decrement: PropTypes.func.isRequired,
-    decrementAsync: PropTypes.func.isRequired,
+    countClick: PropTypes.func.isRequired,
+    asyncCountClick: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
 
-  handleIncrement({ asyn = false }) {
-    const { increment, incrementAsync } = this.props;
-    asyn ? incrementAsync({ delay: 2000 }) : increment();
+  handleIncrement = ({ byNumber }) => () => {
+    this.props.countClick({ byNumber });
+    console.log('execute!')
   }
 
-  handleDecrement({ asyn = false }) {
-    const { decrement, decrementAsync } = this.props;
-    asyn ? decrementAsync({ delay: 2000 }) : decrement();
+  handleAsyncIncrement = ({ byNumber }) => () => {
+    this.props.asyncCountClick({ byNumber });
   }
 
   handleFetchUsers() {
@@ -65,13 +61,13 @@ class App extends Component {
           <div className="meter">{count}</div>
           <div className="btn-group">
             <FloatingActionButton
-              onClick={() => this.handleIncrement({})}
+              onTouchTap={this.handleIncrement({ byNumber: 1 })}
               backgroundColor={styles.counterStyle.add.backgroundColor}
             >
               <ContentAdd />
             </FloatingActionButton>
             <FloatingActionButton
-              onClick={() => this.handleDecrement({})}
+              onTouchTap={this.handleIncrement({ byNumber: -1 })}
               backgroundColor={styles.counterStyle.remove.backgroundColor}
             >
               <ContentRemove />
@@ -79,23 +75,23 @@ class App extends Component {
           </div>
           <div className="btn-group">
             <FloatingActionButton
-              onClick={() => this.handleIncrement({ asyn: true })}
-              style={styles.asyncStyle.color}
+              onTouchTap={this.handleAsyncIncrement({ byNumber: 1 })}
+              style={styles.asyncStyle}
             >
               async +
             </FloatingActionButton>
             <FloatingActionButton
-              onClick={() => this.handleDecrement({ asyn: true })}
-              style={styles.asyncStyle.color}
+              onTouchTap={this.handleAsyncIncrement({ byNumber: -1 })}
+              style={styles.asyncStyle}
             >
               async -
             </FloatingActionButton>
           </div>
           <div className="btn-group">
             <RaisedButton
-              onClick={() => this.handleFetchUsers()}
+              onTouchTap={() => this.handleFetchUsers()}
               label="fetch users"
-              secondary
+              secondary={true}
             />
           </div>
           <div className="display-panel">
@@ -116,9 +112,7 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  increment: actions.counter.increment,
-  incrementAsync: actions.counter.incrementAsync,
-  decrement: actions.counter.decrement,
-  decrementAsync: actions.counter.decrementAsync,
+  countClick: actions.counter.countClick,
+  asyncCountClick: actions.counter.asyncCountClick,
   getUsers: actions.users.getUsers,
 })(App);

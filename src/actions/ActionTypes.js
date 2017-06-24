@@ -5,10 +5,8 @@ const createRequestTypeByAction = actionType => requestTypes.reduce((accu, type)
 }, {});
 
 
-export const INCREMENT_COUNT = 'INCREMENT_COUNT';
-export const DECREMENT_COUNT = 'DECREMENT_COUNT';
-export const INCREMENT_COUNT_ASYNC = 'INCREMENT_COUNT_ASYNC';
-export const DECREMENT_COUNT_ASYNC = 'DECREMENT_COUNT_ASYNC';
+export const COUNT_CLICK = 'COUNT_CLICK';
+export const COUNT_ASYNC_COUNT = 'COUNT_ASYNC_COUNT';
 
 // async actions
 export const GET_USERS = createRequestTypeByAction('GET_USERS');

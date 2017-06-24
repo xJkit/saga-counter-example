@@ -1,19 +1,12 @@
-import * as Types from './ActionTypes';
+import { createRequestTypes } from './utils';
+import { createAction } from 'redux-actions';
 
-export const increment = () => ({
-    type: Types.INCREMENT_COUNT,
-});
+//--- Sync Action Types ---
+export const COUNT_CLICK = 'COUNT_CLICK';
 
-export const decrement = () => ({
-    type: Types.DECREMENT_COUNT,
-});
+//--- Async Action Types ---
+export const ASYNC_COUNT_CLICK = createRequestTypes('ASYNC_COUNT_CLICK');
 
-export const incrementAsync = ({ delay = 1000 }) => ({
-    type: Types.INCREMENT_COUNT_ASYNC,
-    delay,
-});
-
-export const decrementAsync = ({ delay = 1000 }) => ({
-    type: Types.DECREMENT_COUNT_ASYNC,
-    delay,
-});
+//--- Action Creators ---
+export const countClick = createAction(COUNT_CLICK);
+export const asyncCountClick = createAction(ASYNC_COUNT_CLICK.REQUEST);

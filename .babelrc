@@ -3,5 +3,18 @@
     "react-app",
     "es2015",
     "stage-0"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./src"
+        ],
+        "alias": {
+          "@actions": "/actions"
+        }
+      }
+    ]
   ]
 }
