@@ -1,19 +1,16 @@
-import { ASYNC_COUNT_CLICK, COUNT_CLICK } from '../actions/counter';
-import { put, takeEvery, all, call } from 'redux-saga/effects';
-import { delay } from 'redux-saga';
+import * as ActionTypes from '../actions/ActionTypes';
+import { put, takeEvery, all, call, takeLatest, fork } from 'redux-saga/effects';
+import * as actions from '../actions/counter';
 
-const incrementAsync = function* (action) {
-  try {
-    yield delay(2000);
-    yield put({ type: COUNT_CLICK, payload: action.payload });
-    // yield put({ type: ASYNC_COUNT_CLICK.SUCCESS });
-  } catch(error) {
-    yield put({ type: ASYNC_COUNT_CLICK.FAILURE, error });
-  }
+
+const takeEveryCountClick = function* (action) {
+  yield put(actions.countClick(action.payload));
 };
 
-const watchCounterSaga = function* () {
-  yield takeEvery(ASYNC_COUNT_CLICK.REQUEST, incrementAsync);
+const processes = function* () {
+  yield all([
+    fork(takeEvery, ActionTypes.TAKE_EVERY_COUNT_CLICK, takeEveryCountClick)
+  ])
 };
 
-export default watchCounterSaga;
+export default processes;

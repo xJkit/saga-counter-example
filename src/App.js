@@ -32,17 +32,16 @@ class App extends Component {
   static propTypes = {
     count: PropTypes.number.isRequired,
     countClick: PropTypes.func.isRequired,
-    asyncCountClick: PropTypes.func.isRequired,
+    takeEveryCountClick: PropTypes.func.isRequired,
     getUsers: PropTypes.func.isRequired,
   };
 
   handleIncrement = ({ byNumber }) => () => {
-    this.props.countClick({ byNumber });
-    console.log('execute!')
+    this.props.countClick(byNumber);
   }
 
-  handleAsyncIncrement = ({ byNumber }) => () => {
-    this.props.asyncCountClick({ byNumber });
+  handleTakeEveryIncrement = ({ byNumber }) => () => {
+    this.props.takeEveryCountClick(byNumber);
   }
 
   handleFetchUsers() {
@@ -59,6 +58,8 @@ class App extends Component {
         </div>
         <div className="App-intro">
           <div className="meter">{count}</div>
+
+          <h3>Without Saga</h3>
           <div className="btn-group">
             <FloatingActionButton
               onTouchTap={this.handleIncrement({ byNumber: 1 })}
@@ -73,20 +74,24 @@ class App extends Component {
               <ContentRemove />
             </FloatingActionButton>
           </div>
+
+          <h3>Saga: TakeEvery Increment</h3>
           <div className="btn-group">
             <FloatingActionButton
-              onTouchTap={this.handleAsyncIncrement({ byNumber: 1 })}
+              onTouchTap={this.handleTakeEveryIncrement({ byNumber: 1 })}
               style={styles.asyncStyle}
             >
-              async +
+              <ContentAdd />
             </FloatingActionButton>
             <FloatingActionButton
-              onTouchTap={this.handleAsyncIncrement({ byNumber: -1 })}
+              onTouchTap={this.handleTakeEveryIncrement({ byNumber: -1 })}
               style={styles.asyncStyle}
             >
-              async -
+              <ContentRemove />
             </FloatingActionButton>
           </div>
+
+          <h3>Api Request</h3>
           <div className="btn-group">
             <RaisedButton
               onTouchTap={() => this.handleFetchUsers()}
@@ -113,6 +118,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   countClick: actions.counter.countClick,
-  asyncCountClick: actions.counter.asyncCountClick,
+  takeEveryCountClick: actions.counter.takeEveryCountClick,
   getUsers: actions.users.getUsers,
 })(App);

@@ -1,9 +1,9 @@
-import { COUNT_CLICK } from '../actions/counter';
+import * as ActionTypes from '../actions/ActionTypes';
 
 const count = (state = 0, action) => {
     switch(action.type) {
-      case COUNT_CLICK:
-        return state + action.payload.byNumber;
+      case ActionTypes.COUNT_CLICK:
+        return state + action.payload;
       default:
         return state;
     }
