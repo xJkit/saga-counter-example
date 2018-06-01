@@ -7,3 +7,4 @@ import * as ActionTypes from './ActionTypes';
 export const countClick = createAction(ActionTypes.COUNT_CLICK);
 
 export const takeEveryCountClick = createAction(ActionTypes.TAKE_EVERY_COUNT_CLICK);
+export const takeLatestCountClick = createAction(ActionTypes.TAKE_LATEST_COUNT_CLICK);

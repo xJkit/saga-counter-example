@@ -36,12 +36,16 @@ class App extends Component {
     getUsers: PropTypes.func.isRequired,
   };
 
-  handleIncrement = ({ byNumber }) => () => {
+  handleIncrement = (byNumber) => () => {
     this.props.countClick(byNumber);
   }
 
-  handleTakeEveryIncrement = ({ byNumber }) => () => {
+  handleTakeEveryIncrement = (byNumber) => () => {
     this.props.takeEveryCountClick(byNumber);
+  }
+
+  handleTakeLatestIncrement = (byNumber) => () => {
+    this.props.takeLatestCountClick(byNumber);
   }
 
   handleFetchUsers() {
@@ -59,37 +63,67 @@ class App extends Component {
         <div className="App-intro">
           <div className="meter">{count}</div>
 
+
+
           <h3>Without Saga</h3>
+          <h6>(OS: sync counter)</h6>
           <div className="btn-group">
             <FloatingActionButton
-              onTouchTap={this.handleIncrement({ byNumber: 1 })}
+              onTouchTap={this.handleIncrement(1)}
               backgroundColor={styles.counterStyle.add.backgroundColor}
             >
               <ContentAdd />
             </FloatingActionButton>
             <FloatingActionButton
-              onTouchTap={this.handleIncrement({ byNumber: -1 })}
+              onTouchTap={this.handleIncrement(-1)}
               backgroundColor={styles.counterStyle.remove.backgroundColor}
             >
               <ContentRemove />
             </FloatingActionButton>
           </div>
 
-          <h3>Saga: TakeEvery Increment</h3>
+
+
+
+          <h3>Saga: TakeEvery Increment (delay 500ms)</h3>
           <div className="btn-group">
             <FloatingActionButton
-              onTouchTap={this.handleTakeEveryIncrement({ byNumber: 1 })}
+              onTouchTap={this.handleTakeEveryIncrement(1)}
               style={styles.asyncStyle}
             >
               <ContentAdd />
             </FloatingActionButton>
             <FloatingActionButton
-              onTouchTap={this.handleTakeEveryIncrement({ byNumber: -1 })}
+              onTouchTap={this.handleTakeEveryIncrement(-1)}
               style={styles.asyncStyle}
             >
               <ContentRemove />
             </FloatingActionButton>
           </div>
+
+
+
+          <h3>Saga: TakeLatest Increment (delay 500ms)</h3>
+          <div>(O.S: previous action will be cancelled)</div>
+          <div className="btn-group">
+            <FloatingActionButton
+              onTouchTap={this.handleTakeLatestIncrement(1)}
+              style={styles.asyncStyle}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+            <FloatingActionButton
+              onTouchTap={this.handleTakeLatestIncrement(-1)}
+              style={styles.asyncStyle}
+            >
+              <ContentRemove />
+            </FloatingActionButton>
+          </div>
+
+
+
+
+
 
           <h3>Api Request</h3>
           <div className="btn-group">
@@ -119,5 +153,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   countClick: actions.counter.countClick,
   takeEveryCountClick: actions.counter.takeEveryCountClick,
+  takeLatestCountClick: actions.counter.takeLatestCountClick,
   getUsers: actions.users.getUsers,
 })(App);
