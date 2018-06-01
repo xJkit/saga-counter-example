@@ -48,6 +48,10 @@ class App extends Component {
     this.props.takeLatestCountClick(byNumber);
   }
 
+  handleActionChannelIncrement = (byNumber) => () => {
+    this.props.actionChannelCountClick(byNumber);
+  }
+
   handleFetchUsers() {
     this.props.getUsers();
   }
@@ -120,6 +124,23 @@ class App extends Component {
             </FloatingActionButton>
           </div>
 
+          <h3>Saga: Increment in Action Channel (delay 500ms)</h3>
+          <div>buffer size = 5 (sliding)</div>
+          <div className="btn-group">
+            <FloatingActionButton
+              onTouchTap={this.handleActionChannelIncrement(1)}
+              style={styles.asyncStyle}
+            >
+              <ContentAdd />
+            </FloatingActionButton>
+            <FloatingActionButton
+              onTouchTap={this.handleActionChannelIncrement(-1)}
+              style={styles.asyncStyle}
+            >
+              <ContentRemove />
+            </FloatingActionButton>
+          </div>
+
 
 
 
@@ -154,5 +175,6 @@ export default connect(mapStateToProps, {
   countClick: actions.counter.countClick,
   takeEveryCountClick: actions.counter.takeEveryCountClick,
   takeLatestCountClick: actions.counter.takeLatestCountClick,
+  actionChannelCountClick: actions.counter.actionChannelCountClick,
   getUsers: actions.users.getUsers,
 })(App);
