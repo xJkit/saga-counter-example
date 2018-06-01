@@ -1,4 +1,4 @@
-import { ASYNC_COUNT_CLICK, COUNT_CLICK } from '@actions/counter';
+import { ASYNC_COUNT_CLICK, COUNT_CLICK } from '../actions/counter';
 import { put, takeEvery, all, call } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 

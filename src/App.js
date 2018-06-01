@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './styles/App.css';
 
 import { connect } from 'react-redux';
-import * as actions from '@actions';
+import * as actions from './actions';
 import User from './User';
 
 // Material UI Components
